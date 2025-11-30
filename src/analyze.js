@@ -3,11 +3,16 @@ const path = require('path');
 const { parse } = require('csv-parse/sync');
 const xlsx = require('xlsx');
 
-const dataDir = '.';
+const dataDir = path.resolve(__dirname, '..', 'data');
+const outputDir = path.resolve(__dirname, '..', 'output');
 
+if (!fs.existsSync(dataDir)) {
+  console.error(`Data directory not found: ${dataDir}`);
+  process.exit(1);
+}
 const csvFiles = fs.readdirSync(dataDir).filter((file) => file.endsWith('.csv'));
 if (csvFiles.length === 0) {
-  console.error('No CSV files found in the current directory.');
+  console.error(`No CSV files found in ${dataDir}.`);
   process.exit(1);
 }
 
@@ -89,7 +94,8 @@ const sheet = xlsx.utils.json_to_sheet(results, {
 const workbook = xlsx.utils.book_new();
 xlsx.utils.book_append_sheet(workbook, sheet, '2021 Summary');
 
-const outputPath = path.join(dataDir, 'covid_2021_summary.xlsx');
+fs.mkdirSync(outputDir, { recursive: true });
+const outputPath = path.join(outputDir, 'covid_2021_summary.xlsx');
 xlsx.writeFile(workbook, outputPath);
 
 console.log(`Wrote summary for ${results.length} countries to ${outputPath}`);

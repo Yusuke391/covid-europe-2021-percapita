@@ -25,12 +25,18 @@
   - `population_urban / area_urban_sq_km`（固定値。欠損があれば空欄）。
 - 出力: `covid_2021_summary.xlsx`（シート名: `2021 Summary`）。
 
+## ディレクトリ構成
+- `data/` : 各国CSV（入力）
+- `src/` : `analyze.js`
+- `output/` : 生成される `covid_2021_summary.xlsx`
+- ルート : `README.md`, `package.json`, `.gitignore`, `package-lock.json`
+
 ## 使い方
 ```bash
 npm install
 npm run analyze
 ```
-- カレントディレクトリにある各国CSVを読み込み、`covid_2021_summary.xlsx`を上書き生成します。
+- `data/` 内のCSVを読み込み、`output/covid_2021_summary.xlsx`を上書き生成します。
 
 ## 留意点・調整案
 - CSVが日付順でない場合は年末値がずれるので、必要なら日付でソートする処理を追加してください。
@@ -59,12 +65,18 @@ npm run analyze
   - `population_urban / area_urban_sq_km` (single, time-invariant value).
 - Output: `covid_2021_summary.xlsx` (sheet `2021 Summary`).
 
+## Directory layout
+- `data/`: input country CSVs
+- `src/`: `analyze.js`
+- `output/`: generated `covid_2021_summary.xlsx`
+- root: `README.md`, `package.json`, `.gitignore`, `package-lock.json`
+
 ## Usage
 ```bash
 npm install
 npm run analyze
 ```
-- Reads all country CSVs in the current directory and rewrites `covid_2021_summary.xlsx`.
+- Reads all country CSVs in `data/` and writes `output/covid_2021_summary.xlsx`.
 
 ## Notes / adjustments
 - If CSV rows are unsorted by date, sort before picking the year-end value.
